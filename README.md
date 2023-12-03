@@ -1,4 +1,4 @@
-# Fruit Classifier
+# Neural Network Fruit Classifier
 A convolutional neural network trained to predict fruits. Built using Pytorch, Streamlit, and MongoDB. 
 
 
