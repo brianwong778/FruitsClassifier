@@ -8,6 +8,7 @@ import pymongo
 from pymongo import MongoClient
 from dotenv import load_dotenv
 import os
+import io
 
 # Load environment variables
 load_dotenv()
@@ -21,7 +22,6 @@ client = pymongo.MongoClient(MONGODB_URI)
 db = client[DB_NAME]
 fruits_collection = db[COLLECTION_NAME]
 
-# Define the model class
 class FruitsModel(nn.Module):
     def __init__(self):
         super().__init__()
@@ -115,21 +115,31 @@ class_names = [
 ]
 
 
-st.title('Fruit Classifier by Brian Wong')
-uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "png", "jpeg"])
+# Centering the title using Markdown with HTML
+st.markdown("<h1 style='text-align: center;'>Fruit Classifier by Brian Wong</h1>", unsafe_allow_html=True)
 
-if uploaded_file is not None:
-    bytes_data = uploaded_file.getvalue()
-    st.image(bytes_data, caption='Uploaded Image.', use_column_width=True)
+# Use columns to center the content
+col1, col2, col3 = st.columns([1,2,1])
 
-    img = preprocess_image(uploaded_file)
-    predicted_class = predict_image(img, model, class_names)
-    st.write(f'Predicted Fruit: {predicted_class}')
+with col2:
+    uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "png", "jpeg"])
 
-    # Fetch fruit description from MongoDB
-    fruit_info = fruits_collection.find_one({"name": predicted_class})
-    if fruit_info and "description" in fruit_info:
-        st.write(fruit_info["description"])
-    else:
-        st.write("Description not found.")
+    if uploaded_file is not None:
+        bytes_data = uploaded_file.getvalue()
 
+        img = preprocess_image(uploaded_file)
+        predicted_class = predict_image(img, model, class_names)
+
+        # Display prediction and description with larger text
+        st.markdown(f"<h2 style='text-align: center;'>Predicted Fruit: {predicted_class}</h2>", unsafe_allow_html=True)
+
+        # Fetch fruit description from MongoDB
+        fruit_info = fruits_collection.find_one({"name": predicted_class})
+        if fruit_info and "description" in fruit_info:
+            st.markdown(f"<p style='text-align: center; font-size: 20px;'>{fruit_info['description']}</p>", unsafe_allow_html=True)
+        else:
+            st.markdown("<p style='text-align: center; font-size: 20px;'>Description not found.</p>", unsafe_allow_html=True)
+
+        # Display the image
+        image = Image.open(io.BytesIO(bytes_data))
+        st.image(image, caption='Uploaded Image.', use_column_width=True)
