@@ -8,10 +8,6 @@ A convolutional neural network trained to predict fruits. Built using PyTorch, S
 
 </div>
 
-## Project Overview
-
-[Provide a more detailed description of your project here. You might include the motivation behind the project, the problem it solves, how it works, or any unique features or challenges you encountered during development.]
-
 ## Key Features
 
 - **Convolutional Neural Network**: Utilizes advanced CNN architectures for high accuracy in fruit classification.
