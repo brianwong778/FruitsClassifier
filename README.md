@@ -13,7 +13,7 @@ A convolutional neural network trained to predict fruits. Built using PyTorch, S
 - **Convolutional Neural Network**: Utilizes advanced CNN architectures for high accuracy in fruit classification.
 - **PyTorch Integration**: Built with PyTorch to leverage its powerful and flexible deep learning capabilities.
 - **Streamlit App**: Interactive web app created with Streamlit for easy demonstration of the model's capabilities.
-- **MongoDB Backend**: Efficiently manages dataset and prediction results using MongoDB.
+- **MongoDB Backend**: Stores fruit descriptions that are returned to the user upon prediction.
 
 ## Details
 
